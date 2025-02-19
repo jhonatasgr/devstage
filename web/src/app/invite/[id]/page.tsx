@@ -6,8 +6,14 @@ import { Stats } from './components/stats'
 
 import logo from '@/assets/logo.svg'
 
-export default function InvitePage() {
-	const inviteLink = 'https://devstage.com/123131313123123'
+interface InvitePageProps {
+	params: Promise<{ id: string }>
+}
+
+export default async function InvitePage({ params }: InvitePageProps) {
+	const subscribeID = (await params).id
+	const inviteLink = `http://localhost:3333/invites/${subscribeID}`
+
 	return (
 		<div className="flex min-h-dvh flex-col items-center justify-between gap-16 md:flex-row">
 			<div className="flex w-full max-w-137.5 flex-col justify-center gap-10">
@@ -36,7 +42,7 @@ export default function InvitePage() {
 
 					<InviteLinkInput link={inviteLink} />
 
-					<Stats />
+					<Stats subscriberId={subscribeID} />
 				</div>
 			</div>
 			<Ranking />
